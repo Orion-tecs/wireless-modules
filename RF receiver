@@ -1,0 +1,32 @@
+#include <RH_ASK.h>
+#include <SPI.h>
+
+RH_ASK driver;
+const int output = 2;
+char receive[32];
+
+void setup()
+{
+  driver.init();
+  pinMode(output, OUTPUT);
+}
+
+void loop()
+{
+  uint8_t buf[RH_ASK_MAX_MESSAGE_LEN];
+  uint8_t buflen = sizeof(buf);
+
+  if (driver.recv(buf, &buflen))
+  {
+    memset(receive, 0, sizeof(receive));
+    for (int i = 0; i < buflen; i++) {
+      receive[i] = buf[i];
+    }
+    if (strcmp(receive, "Switch_ON") == 0) {
+      digitalWrite(output, HIGH);
+      
+    } else if (strcmp(receive, "Switch_OFF") == 0) {
+      digitalWrite(output, LOW);
+    }
+  }
+}
