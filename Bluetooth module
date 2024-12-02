@@ -1,0 +1,41 @@
+#include <SoftwareSerial.h>
+
+SoftwareSerial mySerial(10, 11); // RX, TX
+
+char t;
+const int IN1=2,IN2=3;
+ 
+void setup() {
+Serial.begin(9600);
+mySerial.begin(9600);
+pinMode(IN1,OUTPUT);  
+pinMode(IN2,OUTPUT);   
+ 
+}
+ 
+void loop() {
+if(mySerial.available()){
+  t = mySerial.read();
+}
+ 
+if(t == 'F'||t=='f'){         
+  digitalWrite(IN1,HIGH);
+  digitalWrite(IN2,LOW);
+
+ 
+}
+ 
+else if(t == 'B'||t=='b')
+{     
+  digitalWrite(IN1,LOW);
+  digitalWrite(IN2,HIGH);
+
+}
+ 
+else if(t == 'S'||t=='s'){      
+  digitalWrite(IN1,LOW);
+  digitalWrite(IN2,LOW);
+
+}
+delay(100);
+}
