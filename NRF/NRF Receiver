@@ -1,0 +1,48 @@
+#include <SoftwareSerial.h>
+#include<Servo.h>
+Servo servo;
+int pos = 0;
+
+SoftwareSerial mySerial(10, 11); // RX, tx
+
+
+
+char c  = ' ';
+
+ 
+void setup() 
+{
+  
+   servo.attach(9);
+   Serial.begin(9600);
+   mySerial.begin(9600);
+   Serial.println("START");
+}
+ 
+ 
+void loop()
+{
+   if(mySerial.available())
+   {
+      char c = mySerial.read();
+
+      if (c=='1') 
+      { 
+
+        servo.write(0);
+      }
+     else if (c=='2') 
+      { 
+
+        servo.write(180);
+      }
+
+        
+       else 
+      {
+          servo.write(90);
+        }
+      Serial.println(c);
+   }
+ 
+}
